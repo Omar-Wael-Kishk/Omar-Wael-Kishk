@@ -10,12 +10,12 @@
     <!-- Hexagon Pattern -->
     <pattern id="hexPattern" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
       <path d="M 30,0 L 50,13 L 50,39 L 30,52 L 10,39 L 10,13 Z" 
-            fill="none" stroke="#00ff41" stroke-width="0.5" opacity="0.08"/>
+            fill="none" stroke="#00ff41" stroke-width="0.5" opacity="0.12"/>
     </pattern>
     
     <!-- Scanlines -->
     <pattern id="scanlines" x="0" y="0" width="100%" height="3" patternUnits="userSpaceOnUse">
-      <line x1="0" y1="0" x2="100%" y2="0" stroke="#00ff41" stroke-width="0.5" opacity="0.03"/>
+      <line x1="0" y1="0" x2="100%" y2="0" stroke="#00ff41" stroke-width="0.5" opacity="0.04"/>
     </pattern>
     
     <!-- Ultra White & Neon Glow Filters -->
@@ -49,11 +49,18 @@
       </feMerge>
     </filter>
 
-    <filter id="greenGlow">
-      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+    <filter id="greenGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
       <feMerge>
         <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="terminalGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
@@ -121,11 +128,24 @@
         60% { transform: translate(0, 0); opacity: 0.9; }
       }
 
+      @keyframes tagGlitchPink {
+        0%, 100% { transform: translate(0, 0); }
+        92% { transform: translate(0, 0); }
+        94% { transform: translate(-3px, 1px); }
+        96% { transform: translate(3px, -1px); }
+        98% { transform: translate(0, 0); }
+      }
+
       @keyframes whiteFlash {
         0%, 100% { fill: #ffffff; opacity: 1; }
         50% { fill: #f0ffff; opacity: 0.95; }
         52% { fill: #00ffff; opacity: 1; }
         54% { fill: #ffffff; opacity: 1; }
+      }
+
+      @keyframes lineGlowPulse {
+        0%, 100% { opacity: 0.3; stroke: #00ff41; }
+        50% { opacity: 0.8; stroke: #00ffff; }
       }
       
       @keyframes draw { 
@@ -140,11 +160,13 @@
         0%, 100% { opacity: 0.3; transform: scale(0.9); }
         50% { opacity: 1; transform: scale(1.1); }
       }
-      
+
       .glitch-red { animation: heavyGlitchRed 1.8s infinite; }
       .glitch-cyan { animation: heavyGlitchCyan 1.8s infinite; }
+      .tag-struggler { animation: tagGlitchPink 2s infinite; }
       .main-white { animation: whiteFlash 3s infinite; }
       .blink { animation: blink 1s infinite; }
+      .line-pulse { animation: lineGlowPulse 3s infinite; }
       .line { 
         stroke-dasharray: 850; 
         stroke-dashoffset: 850; 
@@ -164,12 +186,12 @@
   <rect width="900" height="450" fill="url(#scanlines)"/>
   
   <!-- Animated Scanline -->
-  <rect width="900" height="2" fill="#00ff41" opacity="0.3">
+  <rect width="900" height="2" fill="#00ff41" opacity="0.4" filter="url(#greenGlow)">
     <animate attributeName="y" values="-2;450;-2" dur="4s" repeatCount="indefinite"/>
   </rect>
   
-  <!-- Corner Brackets - WD2 Style -->
-  <g opacity="0.8">
+  <!-- Corner Brackets - WD2 Style with Glow -->
+  <g opacity="0.9" filter="url(#greenGlow)">
     <line x1="40" y1="30" x2="110" y2="30" stroke="#00ff41" stroke-width="3"/>
     <line x1="40" y1="30" x2="40" y2="100" stroke="#00ff41" stroke-width="3"/>
     <line x1="860" y1="30" x2="790" y2="30" stroke="#00ff41" stroke-width="3"/>
@@ -180,10 +202,10 @@
     <line x1="860" y1="420" x2="860" y2="350" stroke="#00ff41" stroke-width="3"/>
   </g>
   
-  <!-- Decorative Lines -->
-  <line class="line" x1="60" y1="135" x2="840" y2="135" stroke="#00ff41" stroke-width="2" opacity="0.4"/>
-  <line class="line" x1="60" y1="205" x2="840" y2="205" stroke="#ff0066" stroke-width="1" opacity="0.3" style="animation-delay: 0.3s"/>
-  <line class="line" x1="60" y1="370" x2="840" y2="370" stroke="#00ff41" stroke-width="1" opacity="0.3" style="animation-delay: 0.6s"/>
+  <!-- Decorative Lines with Pulsing Glow -->
+  <line class="line line-pulse" x1="60" y1="135" x2="840" y2="135" stroke="#00ff41" stroke-width="2"/>
+  <line class="line" x1="60" y1="205" x2="840" y2="205" stroke="#ff0066" stroke-width="1" opacity="0.4" filter="url(#pinkGlow)" style="animation-delay: 0.3s"/>
+  <line class="line line-pulse" x1="60" y1="370" x2="840" y2="370" stroke="#00ff41" stroke-width="1" style="animation-delay: 0.6s"/>
   
   <!-- ================= HEADER TITLE WITH HIGH-POWERED GLITCH EFFECT ================= -->
   <g>
@@ -207,29 +229,33 @@
   <circle cx="170" cy="71" r="6" fill="#00ff41" filter="url(#greenGlow)" class="pulse-dot"/>
   <!-- ======================================================================= -->
 
-  <!-- Subtitle -->
-  <text class="subtitle fade-in" x="450" y="115" text-anchor="middle" style="animation-delay: 0.5s">
+  <!-- Subtitle with Subtle Glow -->
+  <text class="subtitle fade-in" x="450" y="115" text-anchor="middle" filter="url(#greenGlow)" style="animation-delay: 0.5s">
     [ BACK-END STRUGGLER // FULL-STACK ENGINEER // CAFFEINE-POWERED ]
   </text>
   
-  <!-- Terminal window with WD2 styling -->
+  <!-- Terminal window with Neon Glowing Border -->
   <g>
-    <rect x="60" y="155" width="780" height="215" fill="#000000" stroke="#00ff41" stroke-width="2" rx="4" opacity="0.85"/>
+    <!-- Terminal Background & Outer Glow Border -->
+    <rect x="60" y="155" width="780" height="215" fill="#000000" stroke="#00ff41" stroke-width="2" rx="4" opacity="0.9" filter="url(#terminalGlow)"/>
+    <rect x="60" y="155" width="780" height="215" fill="none" stroke="#00ff41" stroke-width="1.5" rx="4"/>
     
-    <circle cx="70" cy="165" r="3" fill="#00ff41" opacity="0.8"/>
-    <circle cx="830" cy="165" r="3" fill="#00ff41" opacity="0.8"/>
-    <circle cx="70" cy="360" r="3" fill="#00ff41" opacity="0.8"/>
-    <circle cx="830" cy="360" r="3" fill="#00ff41" opacity="0.8"/>
+    <!-- Window Corner Nodes -->
+    <circle cx="70" cy="165" r="3" fill="#00ff41" filter="url(#greenGlow)"/>
+    <circle cx="830" cy="165" r="3" fill="#00ff41" filter="url(#greenGlow)"/>
+    <circle cx="70" cy="360" r="3" fill="#00ff41" filter="url(#greenGlow)"/>
+    <circle cx="830" cy="360" r="3" fill="#00ff41" filter="url(#greenGlow)"/>
     
-    <circle cx="85" cy="180" r="4" fill="#00ff41"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/></circle>
-    <circle cx="105" cy="180" r="4" fill="#00ff41"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="0.5s" repeatCount="indefinite"/></circle>
-    <circle cx="125" cy="180" r="4" fill="#00ff41"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="1s" repeatCount="indefinite"/></circle>
+    <!-- Animated Window Controls -->
+    <circle cx="85" cy="180" r="4" fill="#00ff41" filter="url(#greenGlow)"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/></circle>
+    <circle cx="105" cy="180" r="4" fill="#00ff41" filter="url(#greenGlow)"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="0.5s" repeatCount="indefinite"/></circle>
+    <circle cx="125" cy="180" r="4" fill="#00ff41" filter="url(#greenGlow)"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" begin="1s" repeatCount="indefinite"/></circle>
     
-    <!-- السطر الأول -->
-    <text class="terminal-text fade-in" x="85" y="215" style="animation-delay: 0.8s">
+    <!-- السطر الأول مع Neon Glow على اليوزر والكوماند -->
+    <text class="terminal-text fade-in" x="85" y="215" filter="url(#greenGlow)" style="animation-delay: 0.8s">
       Omar_Wael 𒉭 g4m3_0v3r_SRGN:~$
     </text>
-    <text class="terminal-text fade-in" x="335" y="215" fill="#ff0066" style="animation-delay: 1s">
+    <text class="terminal-text fade-in" x="335" y="215" fill="#ff0066" filter="url(#pinkGlow)" style="animation-delay: 1s">
       ./display_skills.sh
     </text>
     
@@ -247,52 +273,53 @@
       ▸ Automation via Bash scripting &amp; Linux environment optimization
     </text>
     
-    <!-- السطر الأخير -->
-    <text class="terminal-text fade-in" x="85" y="350" style="animation-delay: 2s">
+    <!-- السطر الأخير والكيرسر المتوهج -->
+    <text class="terminal-text fade-in" x="85" y="350" filter="url(#greenGlow)" style="animation-delay: 2s">
       Omar_Wael 𒉭 g4m3_0v3r_SRGN:~$
     </text>
-    <rect class="blink" x="335" y="336" width="12" height="18" fill="#00ff41" style="animation-delay: 2.2s"/>
+    <rect class="blink" x="335" y="336" width="12" height="18" fill="#00ff41" filter="url(#greenGlow)" style="animation-delay: 2.2s"/>
   </g>
   
-  <!-- Tech tags with WD2 style -->
+  <!-- Tech tags with Glowing Borders & Cyber Glitch Effect -->
   <g class="fade-in" style="animation-delay: 2.2s">
-    <rect x="75" y="390" width="95" height="28" rx="3" fill="none" stroke="#00ff41" stroke-width="2"/>
-    <rect x="77" y="392" width="5" height="24" fill="#00ff41" opacity="0.6"/>
+    <rect x="75" y="390" width="95" height="28" rx="3" fill="none" stroke="#00ff41" stroke-width="2" filter="url(#greenGlow)"/>
+    <rect x="77" y="392" width="5" height="24" fill="#00ff41" opacity="0.8"/>
     <text class="tag-text" x="122" y="410" text-anchor="middle">PYTHON</text>
   </g>
   
   <g class="fade-in" style="animation-delay: 2.3s">
-    <rect x="185" y="390" width="95" height="28" rx="3" fill="none" stroke="#00ff41" stroke-width="2"/>
-    <rect x="187" y="392" width="5" height="24" fill="#00ff41" opacity="0.6"/>
+    <rect x="185" y="390" width="95" height="28" rx="3" fill="none" stroke="#00ff41" stroke-width="2" filter="url(#greenGlow)"/>
+    <rect x="187" y="392" width="5" height="24" fill="#00ff41" opacity="0.8"/>
     <text class="tag-text" x="232" y="410" text-anchor="middle">DJANGO</text>
   </g>
   
   <g class="fade-in" style="animation-delay: 2.4s">
-    <rect x="295" y="390" width="95" height="28" rx="3" fill="none" stroke="#00ff41" stroke-width="2"/>
-    <rect x="297" y="392" width="5" height="24" fill="#00ff41" opacity="0.6"/>
+    <rect x="295" y="390" width="95" height="28" rx="3" fill="none" stroke="#00ff41" stroke-width="2" filter="url(#greenGlow)"/>
+    <rect x="297" y="392" width="5" height="24" fill="#00ff41" opacity="0.8"/>
     <text class="tag-text" x="342" y="410" text-anchor="middle">REACT</text>
   </g>
   
   <g class="fade-in" style="animation-delay: 2.5s">
-    <rect x="405" y="390" width="95" height="28" rx="3" fill="none" stroke="#00ff41" stroke-width="2"/>
-    <rect x="407" y="392" width="5" height="24" fill="#00ff41" opacity="0.6"/>
+    <rect x="405" y="390" width="95" height="28" rx="3" fill="none" stroke="#00ff41" stroke-width="2" filter="url(#greenGlow)"/>
+    <rect x="407" y="392" width="5" height="24" fill="#00ff41" opacity="0.8"/>
     <text class="tag-text" x="452" y="410" text-anchor="middle">DOCKER</text>
   </g>
   
   <g class="fade-in" style="animation-delay: 2.6s">
-    <rect x="515" y="390" width="125" height="28" rx="3" fill="none" stroke="#00ff41" stroke-width="2"/>
-    <rect x="517" y="392" width="5" height="24" fill="#00ff41" opacity="0.6"/>
+    <rect x="515" y="390" width="125" height="28" rx="3" fill="none" stroke="#00ff41" stroke-width="2" filter="url(#greenGlow)"/>
+    <rect x="517" y="392" width="5" height="24" fill="#00ff41" opacity="0.8"/>
     <text class="tag-text" x="577" y="410" text-anchor="middle">KUBERNETES</text>
   </g>
   
-  <g class="fade-in" style="animation-delay: 2.7s">
-    <rect x="655" y="390" width="170" height="28" rx="3" fill="none" stroke="#ff0066" stroke-width="2"/>
-    <rect x="657" y="392" width="5" height="24" fill="#ff0066" opacity="0.8"/>
-    <text class="tag-text" x="740" y="410" text-anchor="middle" fill="#ff0066">STRUGGLER MODE</text>
+  <!-- Struggler Mode Tag with Pink Neon Glow & Glitch -->
+  <g class="fade-in tag-struggler" style="animation-delay: 2.7s">
+    <rect x="655" y="390" width="170" height="28" rx="3" fill="none" stroke="#ff0066" stroke-width="2" filter="url(#pinkGlow)"/>
+    <rect x="657" y="392" width="5" height="24" fill="#ff0066" opacity="0.9"/>
+    <text class="tag-text" x="740" y="410" text-anchor="middle" fill="#ff0066" filter="url(#pinkGlow)">STRUGGLER MODE</text>
   </g>
   
-  <!-- Binary floating elements -->
-  <g opacity="0.2">
+  <!-- Binary floating elements with subtle glow -->
+  <g opacity="0.35" filter="url(#greenGlow)">
     <text x="50" y="250" font-family="'Courier New', monospace" font-size="9" fill="#00ff41">01101111</text>
     <text x="850" y="200" font-family="'Courier New', monospace" font-size="9" fill="#00ff41">01110111</text>
     <text x="60" y="320" font-family="'Courier New', monospace" font-size="9" fill="#00ff41">01100001</text>
