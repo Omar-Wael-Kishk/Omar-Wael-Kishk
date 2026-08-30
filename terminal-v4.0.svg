@@ -31,7 +31,7 @@
     <style>
       .title {
         font-family: 'Courier New', monospace;
-        font-size: 48px;
+        font-size: 44px;
         font-weight: bold;
         fill: #ffffff;
         letter-spacing: 4px;
@@ -132,11 +132,11 @@
   <line class="line" x1="60" y1="370" x2="840" y2="370" stroke="#00ff41" stroke-width="1" opacity="0.3" style="animation-delay: 0.6s"/>
   
   <!-- Titles -->
-  <text class="title glitch-shadow" x="450" y="85" text-anchor="middle" fill="#ff0066" opacity="0.5">OMAR WAEL</text>
-  <text class="title" x="450" y="85" text-anchor="middle" filter="url(#glow)">OMAR WAEL</text>
+  <text class="title glitch-shadow" x="450" y="85" text-anchor="middle" fill="#ff0066" opacity="0.5">OMAR WAEL KISHK</text>
+  <text class="title" x="450" y="85" text-anchor="middle" filter="url(#glow)">OMAR WAEL KISHK</text>
 
   <!-- Status Indicator Dot -->
-  <circle cx="290" cy="70" r="7" fill="#00ff41" filter="url(#glow)" class="pulse-dot"/>
+  <circle cx="205" cy="70" r="7" fill="#00ff41" filter="url(#glow)" class="pulse-dot"/>
   
   <!-- Subtitle -->
   <text class="subtitle fade-in" x="450" y="115" text-anchor="middle" style="animation-delay: 0.5s">
@@ -160,7 +160,6 @@
     <text class="terminal-text fade-in" x="85" y="215" style="animation-delay: 0.8s">
       Omar_Wael 𒉭 g4m3_0v3r_SRGN:~$
     </text>
-    <!-- تم ترحيل الكوماند لـ x="335" عشان يبدأ بعد الـ $ مباشرة -->
     <text class="terminal-text fade-in" x="335" y="215" fill="#ff0066" style="animation-delay: 1s">
       ./display_skills.sh
     </text>
@@ -173,7 +172,7 @@
       ▸ Building modern, dynamic frontends with React
     </text>
     <text class="output-text fade-in" x="105" y="295" style="animation-delay: 1.6s">
-      ▸ Orchestrating AI Automation Agents using n8n&amp; Python
+      ▸ Orchestrating AI Automation Agents using n8n &amp; Python
     </text>
     <text class="output-text fade-in" x="105" y="320" style="animation-delay: 1.8s">
       ▸ Automation via Bash scripting &amp; Linux environment optimization
@@ -183,7 +182,6 @@
     <text class="terminal-text fade-in" x="85" y="350" style="animation-delay: 2s">
       Omar_Wael 𒉭 g4m3_0v3r_SRGN:~$
     </text>
-    <!-- تم ضبط إحداثيات الكيرسر لـ x="335" عشان ييجى بعد الـ $ بالظبط وميغطيش عليها -->
     <rect class="blink" x="335" y="336" width="12" height="18" fill="#00ff41" style="animation-delay: 2.2s"/>
   </g>
   
