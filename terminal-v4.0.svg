@@ -1,13 +1,13 @@
 <svg width="100%" height="100%" viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Watch Dogs 2 Style Background -->
+    <!-- Background Gradient -->
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#0a0a0a;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#020205;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#080a0f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#020205;stop-opacity:1" />
     </linearGradient>
     
-    <!-- Hexagon Pattern من Watch Dogs -->
+    <!-- Hexagon Pattern -->
     <pattern id="hexPattern" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
       <path d="M 30,0 L 50,13 L 50,39 L 30,52 L 10,39 L 10,13 Z" 
             fill="none" stroke="#00ff41" stroke-width="0.5" opacity="0.08"/>
@@ -18,8 +18,38 @@
       <line x1="0" y1="0" x2="100%" y2="0" stroke="#00ff41" stroke-width="0.5" opacity="0.03"/>
     </pattern>
     
-    <!-- WD2 Glow Effect -->
-    <filter id="glow">
+    <!-- Ultra White & Neon Glow Filters -->
+    <filter id="ultraWhiteGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur1" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur2" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur3" />
+      <feGaussianBlur in="SourceGraphic" stdDeviation="35" result="blur4" />
+      <feMerge>
+        <feMergeNode in="blur4" />
+        <feMergeNode in="blur3" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="cyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="pinkGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="greenGlow">
       <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
       <feMerge>
         <feMergeNode in="coloredBlur"/>
@@ -29,12 +59,11 @@
     </filter>
     
     <style>
-      .title {
+      .title-base {
         font-family: 'Courier New', monospace;
-        font-size: 44px;
-        font-weight: bold;
-        fill: #ffffff;
-        letter-spacing: 4px;
+        font-size: 42px;
+        font-weight: 900;
+        letter-spacing: 5px;
         text-transform: uppercase;
       }
       
@@ -64,16 +93,39 @@
         font-weight: bold;
       }
       
-      /* WD2 Animations */
+      /* Intense Cyber Glitch & FX Animations */
       @keyframes blink {
         0%, 50% { opacity: 1; }
         51%, 100% { opacity: 0; }
       }
       
-      @keyframes glitch {
-        0%, 100% { opacity: 0; }
-        2%, 8% { opacity: 0.6; transform: translate(-3px, 0); }
-        4%, 6% { opacity: 0.6; transform: translate(3px, 0); }
+      @keyframes heavyGlitchRed {
+        0%, 100% { transform: translate(0, 0); opacity: 0.9; }
+        10% { transform: translate(-6px, 2px); opacity: 1; }
+        12% { transform: translate(5px, -3px); opacity: 1; }
+        14% { transform: translate(-2px, 1px); opacity: 0.8; }
+        15% { transform: translate(0, 0); opacity: 0.9; }
+        55% { transform: translate(0, 0); opacity: 0.9; }
+        57% { transform: translate(-8px, -2px); opacity: 1; }
+        59% { transform: translate(6px, 3px); opacity: 1; }
+        61% { transform: translate(0, 0); opacity: 0.9; }
+      }
+
+      @keyframes heavyGlitchCyan {
+        0%, 100% { transform: translate(0, 0); opacity: 0.9; }
+        11% { transform: translate(6px, -2px); opacity: 1; }
+        13% { transform: translate(-5px, 3px); opacity: 1; }
+        15% { transform: translate(0, 0); opacity: 0.9; }
+        56% { transform: translate(7px, 2px); opacity: 1; }
+        58% { transform: translate(-6px, -3px); opacity: 1; }
+        60% { transform: translate(0, 0); opacity: 0.9; }
+      }
+
+      @keyframes whiteFlash {
+        0%, 100% { fill: #ffffff; opacity: 1; }
+        50% { fill: #f0ffff; opacity: 0.95; }
+        52% { fill: #00ffff; opacity: 1; }
+        54% { fill: #ffffff; opacity: 1; }
       }
       
       @keyframes draw { 
@@ -85,12 +137,14 @@
       }
       
       @keyframes pulse {
-        0%, 100% { opacity: 0.3; }
-        50% { opacity: 1; }
+        0%, 100% { opacity: 0.3; transform: scale(0.9); }
+        50% { opacity: 1; transform: scale(1.1); }
       }
       
+      .glitch-red { animation: heavyGlitchRed 1.8s infinite; }
+      .glitch-cyan { animation: heavyGlitchCyan 1.8s infinite; }
+      .main-white { animation: whiteFlash 3s infinite; }
       .blink { animation: blink 1s infinite; }
-      .glitch-shadow { animation: glitch 3s infinite; }
       .line { 
         stroke-dasharray: 850; 
         stroke-dashoffset: 850; 
@@ -126,18 +180,33 @@
     <line x1="860" y1="420" x2="860" y2="350" stroke="#00ff41" stroke-width="3"/>
   </g>
   
-  <!-- Decorative diagonal lines -->
+  <!-- Decorative Lines -->
   <line class="line" x1="60" y1="135" x2="840" y2="135" stroke="#00ff41" stroke-width="2" opacity="0.4"/>
   <line class="line" x1="60" y1="205" x2="840" y2="205" stroke="#ff0066" stroke-width="1" opacity="0.3" style="animation-delay: 0.3s"/>
   <line class="line" x1="60" y1="370" x2="840" y2="370" stroke="#00ff41" stroke-width="1" opacity="0.3" style="animation-delay: 0.6s"/>
   
-  <!-- Titles -->
-  <text class="title glitch-shadow" x="450" y="85" text-anchor="middle" fill="#ff0066" opacity="0.5">OMAR WAEL KISHK</text>
-  <text class="title" x="450" y="85" text-anchor="middle" filter="url(#glow)">OMAR WAEL KISHK</text>
+  <!-- ================= HEADER TITLE WITH HIGH-POWERED GLITCH EFFECT ================= -->
+  <g>
+    <!-- Deep Ambient Glow Layers -->
+    <text class="title-base" x="450" y="85" text-anchor="middle" fill="#00f3ff" filter="url(#cyanGlow)" opacity="0.8">OMAR WAEL KISHK</text>
+    <text class="title-base" x="450" y="85" text-anchor="middle" fill="#ff0055" filter="url(#pinkGlow)" opacity="0.8">OMAR WAEL KISHK</text>
+
+    <!-- RGB Split Glitch Layers -->
+    <text class="title-base glitch-red" x="446" y="85" text-anchor="middle" fill="#ff0055">OMAR WAEL KISHK</text>
+    <text class="title-base glitch-cyan" x="454" y="85" text-anchor="middle" fill="#00ffff">OMAR WAEL KISHK</text>
+
+    <!-- Core Ultra Glow White Text -->
+    <text class="title-base main-white" x="450" y="85" text-anchor="middle" filter="url(#ultraWhiteGlow)">OMAR WAEL KISHK</text>
+    
+    <!-- Crisp Foreground Overlay -->
+    <text class="title-base" x="450" y="85" text-anchor="middle" fill="#ffffff">OMAR WAEL KISHK</text>
+    <text class="title-base" x="450" y="85" text-anchor="middle" fill="none" stroke="#00ffff" stroke-width="1" opacity="0.7">OMAR WAEL KISHK</text>
+  </g>
 
   <!-- Status Indicator Dot -->
-  <circle cx="205" cy="70" r="7" fill="#00ff41" filter="url(#glow)" class="pulse-dot"/>
-  
+  <circle cx="170" cy="71" r="6" fill="#00ff41" filter="url(#greenGlow)" class="pulse-dot"/>
+  <!-- ======================================================================= -->
+
   <!-- Subtitle -->
   <text class="subtitle fade-in" x="450" y="115" text-anchor="middle" style="animation-delay: 0.5s">
     [ BACK-END STRUGGLER // FULL-STACK ENGINEER // CAFFEINE-POWERED ]
